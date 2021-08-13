@@ -30,7 +30,6 @@ const Container = styled.div<InputContainerProps>`
     position: absolute;
     right: 11px;
     height: 46px;
-    top: 16px;
   }
   .input-error-message {
     margin-top: 8px;
@@ -89,4 +88,4 @@ const Input: React.FC<IProps> = ({
     </Container>
   );
 };
-export default Input;
+export default React.memo(Input);

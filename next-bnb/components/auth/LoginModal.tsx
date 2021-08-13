@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import CloseXIcon from "../../public/static/svg/modal/modal_close_x_icon.svg";
 import MailIcon from "../../public/static/svg/auth/mail.svg";
@@ -9,6 +9,9 @@ import Button from "../common/Button";
 import Input from "../common/Input";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
+import { loginAPI } from "../../lib/api/auth";
+import useValidateMode from "../../hooks/useValidateMode";
+import { userActions } from "../../store/user";
 
 const Container = styled.form`
   width: 568px;
@@ -28,6 +31,7 @@ const Container = styled.form`
   .login-password-input-wrapper {
     svg {
       cursor: pointer;
+      top: 0%;
     }
   }
   .login-modal-submit-button-wrapper {
@@ -48,6 +52,7 @@ interface IProps {
 
 const LoginModal: React.FC<IProps> = ({ closeModal }) => {
   const dispatch = useDispatch();
+  const { setValidateMode } = useValidateMode();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,8 +74,33 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
     dispatch(authActions.setAuthMode("signup"));
   };
 
+  const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setValidateMode(true);
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 입력해주세요.");
+    } else {
+      const loginBody = { email, password };
+
+      try {
+        const { data } = await loginAPI(loginBody);
+        dispatch(userActions.setLoggedUser(data));
+        closeModal();
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
+
   return (
-    <Container>
+    <Container onSubmit={onSubmitLogin}>
       <CloseXIcon className="mordal-close-x-icon" onClick={closeModal} />
       <div className="login-input-wrapper">
         <Input
@@ -80,6 +110,8 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
           icon={<MailIcon />}
           value={email}
           onChange={onChangeEmail}
+          isValid={email !== ""}
+          errorMessage="이메일이 필요합니다."
         />
       </div>
       <div className="login-input-wrapper login-password-input-wrapper">
@@ -96,6 +128,8 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
           value={password}
           onChange={onChangePassword}
           type={isPasswordHided ? "password" : "text"}
+          isValid={password !== ""}
+          errorMessage="비밀번호를 입력하세요"
         />
       </div>
       <div className="login-modal-submit-button-wrapper">
