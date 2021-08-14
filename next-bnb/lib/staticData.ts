@@ -125,8 +125,8 @@ export const boutiquesHotelBuildingTypeList = [
   "객잔(중국)",
 ];
 
-// //* 침실 개수
-// export const bedroomCountList = Array.from(Array(16), (_, i) => `침실 ${i}개`);
+//* 침실 개수
+export const bedroomCountList = Array.from(Array(16), (_, i) => `침실 ${i}개`);
 
 // //* 침대 유형
 // export const bedTypes: BedType[] = [
