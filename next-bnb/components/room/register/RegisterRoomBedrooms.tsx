@@ -10,6 +10,8 @@ import Selector from "../../common/Selector";
 import { bedroomCountList } from "../../../lib/staticData";
 import Button from "../../common/Button";
 import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
+import RegisterRoomBedList from "./RegisterRoomBedList";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -60,6 +62,11 @@ const Container = styled.div`
       border-bottom: 1px solid ${palette.gray_dd};
     }
   }
+  .register-room-bed-count-label {
+    color: #767676;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
   .register-room-bed-type-top {
     display: flex;
     justify-content: space-between;
@@ -80,7 +87,6 @@ const RegisterRoomBedrooms: React.FC = () => {
   );
   const bedroomCount = useSelector((state) => state.registerRoom.bedroomCount);
   const bedCount = useSelector((state) => state.registerRoom.bedCount);
-  const bedList = useSelector((state) => state.registerRoom.bedList);
 
   const dispatch = useDispatch();
 
@@ -122,9 +128,13 @@ const RegisterRoomBedrooms: React.FC = () => {
           onChange={onChangeBedroomCount}
           label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
           options={bedroomCountList}
+          isValid={!!bedroomCount}
         />
       </div>
       <div className="register-room-bed-count-wrapper">
+        <p className="register-room-bed-count-label">
+          게스트가 사용할 수 있는 침대는 몇 개인가요?
+        </p>
         <Counter label="침대" value={bedCount} onChange={onChangeBedCount} />
       </div>
       <h4>침대 유형</h4>
@@ -132,11 +142,12 @@ const RegisterRoomBedrooms: React.FC = () => {
         각 침실에 놓인 침대 유형을 명시하면 숙소에 침대가 어떻게 구비되어 있는지
         게스트가 잘 파악할 수 있습니다.
       </p>
-      <div className="register-room-bed-type-list-wrapper">
-        {bedList.map((bedroom) => (
-          <RegisterRoomBedTypes bedroom={bedroom} />
-        ))}
-      </div>
+      <RegisterRoomBedList />
+      <RegisterRoomFooter
+        prevHref="/room/register/building"
+        nextHref="/room/register/bathroom"
+        isValid={!!bedroomCount}
+      />
     </Container>
   );
 };
