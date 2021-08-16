@@ -38,6 +38,12 @@ const Container = styled.li`
     width: 290px;
     margin-bottom: 18px;
   }
+  .register-room-bed-type-bedroom-counts {
+    font-size: 16px;
+    color: ${palette.gray_76};
+    max-width: 240px;
+    word-break: keep-all;
+  }
 `;
 
 interface IProps {
@@ -82,14 +88,14 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
             침대 {totalBedsCount}개
           </p>
         </div>
-        <Button onClick={toggleOpened} styleType="register" color="white">
+        <Button onClick={toggleOpened} width="161px">
           {opened && "완료"}
           {!opened &&
             (totalBedsCount === 0 ? "침대 추가하기" : "침대 수정하기")}
         </Button>
       </div>
       {opened && (
-        <div className="register-room-bed-selector-wrapper">
+        <div className="register-room-bed-type-selector-wrapper">
           {activedBedOptions.map((type) => (
             <div className="register-room-bed-type-counter" key={type}>
               <Counter
