@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: { authMode: "signup" | "login" } = {
-  authMode: "signup",
+  authMode: "login",
 };
 
 const auth = createSlice({
