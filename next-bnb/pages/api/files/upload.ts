@@ -36,6 +36,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             .catch((e) => reject(e));
         });
       });
+      res.statusCode = 201;
+      res.send(url);
     } catch (e) {
       console.log(e);
       res.end();

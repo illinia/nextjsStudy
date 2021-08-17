@@ -8,6 +8,8 @@ import Button from "../../common/Button";
 import { uploadFileAPI } from "../../../lib/api/file";
 import { useDispatch } from "react-redux";
 import { registerRoomActions } from "../../../store/registerRoom";
+import RegisterRoomPhotoCardList from "./RegisterRoomPhotoCardList";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -64,6 +66,7 @@ const RegisterRoomPhoto: React.FC = () => {
       formdata.append("file", file);
       try {
         const { data } = await uploadFileAPI(formdata);
+        console.log(data);
         if (data) {
           dispatch(registerRoomActions.setPhotos([...photos, data]));
         }
@@ -91,6 +94,12 @@ const RegisterRoomPhoto: React.FC = () => {
           </>
         </div>
       )}
+      {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
+      <RegisterRoomFooter
+        width="100%"
+        prevHref="/room/register/conveniences"
+        nextHref="/room/register/description"
+      />
     </Container>
   );
 };

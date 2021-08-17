@@ -5,14 +5,16 @@ import BackArrowIcon from "../../../public/static/svg/register/register_room_foo
 import Button from "../../common/Button";
 import palette from "../../../style/palette";
 import useValidateMode from "../../../hooks/useValidateMode";
+import { String } from "aws-sdk/clients/batch";
 
-const Container = styled.footer`
+const Container = styled.footer<{ width: String }>`
   position: fixed;
   bottom: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 548px;
+  width: ${({ width }) => width || "548px"};
   height: 82px;
   padding: 14px 30px 20px;
   background-color: white;
@@ -34,12 +36,14 @@ interface IProps {
   prevHref?: string;
   nextHref?: string;
   isValid?: boolean;
+  width?: string;
 }
 
 const RegisterRoomFooter: React.FC<IProps> = ({
   prevHref,
   nextHref,
   isValid = true,
+  width,
 }) => {
   const { setValidateMode } = useValidateMode();
 
@@ -59,7 +63,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
   };
 
   return (
-    <Container>
+    <Container width={width}>
       <Link href={prevHref || ""}>
         <a className="register-room-footer-back">
           <BackArrowIcon />
