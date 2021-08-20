@@ -38,8 +38,9 @@ export const makeQueryString = (
   let queryString = `${baseUrl}?`;
   keys.forEach((key, i) => {
     if (queriesObject[key]) {
-      queryString += `${keys[i]}=${values[i]}`;
+      queryString += `${keys[i]}=${values[i]}&`;
     }
   });
+
   return queryString.slice(0, -1);
 };

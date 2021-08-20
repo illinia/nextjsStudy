@@ -98,3 +98,7 @@ export type SearchRoomState = {
   childrenCount: number;
   infantsCount: number;
 };
+
+export type RoomState = {
+  rooms: RoomType[];
+};

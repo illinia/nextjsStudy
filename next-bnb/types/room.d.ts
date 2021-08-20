@@ -1,4 +1,4 @@
-// import { UserType } from "./user";
+import { UserType } from "./user";
 
 //* 침대 유형
 export type BedType =
