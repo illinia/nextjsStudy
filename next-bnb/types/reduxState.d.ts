@@ -101,4 +101,5 @@ export type SearchRoomState = {
 
 export type RoomState = {
   rooms: RoomType[];
+  detail: RoomType | null;
 };

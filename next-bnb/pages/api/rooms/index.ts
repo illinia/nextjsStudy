@@ -48,18 +48,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const rooms = Data.room.getList();
       const filteredRooms = rooms.filter((room) => {
-        // if (latitude && latitude !== "0" && longitude && longitude !== "0") {
-        //   if (
-        //     !(
-        //       Number(latitude) - 0.5 < room.latitude &&
-        //       room.latitude < Number(latitude) + 0.05 &&
-        //       Number(longitude) - 0.5 < room.longitude &&
-        //       room.longitude < Number(longitude) + 0.05
-        //     )
-        //   ) {
-        //     return false;
-        //   }
-        // }
+        if (latitude && latitude !== "0" && longitude && longitude !== "0") {
+          if (
+            !(
+              Number(latitude) - 0.5 < room.latitude &&
+              room.latitude < Number(latitude) + 0.05 &&
+              Number(longitude) - 0.5 < room.longitude &&
+              room.longitude < Number(longitude) + 0.05
+            )
+          ) {
+            return false;
+          }
+        }
         if (checkInDate) {
           if (
             new Date(checkInDate as string) < new Date(room.startDate) ||
